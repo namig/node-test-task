@@ -1,7 +1,8 @@
 import express, { Express } from "express";
 import { CarService } from "./Service/CarService";
 import { CarController } from "./Controller/CarController";
-import { dbConnection } from "./Database/db";
+import { connect } from "mongoose";
+import { ErrorMiddleware } from "./Infrastructure/ErrorMiddleware";
 
 export class App {
   public app: Express;
@@ -9,16 +10,13 @@ export class App {
 
   constructor() {
     this.app = express();
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || 8000;
 
     this.connectToDatabase();
-    this.initMiddlewares();
-    this.initRoutes();
-  }
-
-  initMiddlewares(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.initRoutes();
+    this.app.use(ErrorMiddleware);
   }
 
   private initRoutes(): void {
@@ -29,9 +27,8 @@ export class App {
   }
 
   private async connectToDatabase(): Promise<void> {
-    await dbConnection();
+    await connect(process.env.MONGO_URL!);
   }
-
 
   public listen(): void {
     this.app.listen(this.port, () => {

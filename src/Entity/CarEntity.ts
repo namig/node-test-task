@@ -1,6 +1,7 @@
 import { Document, model, Schema } from 'mongoose';
 
-interface Car {
+export interface ICar {
+  _id: string;
   name: string;
   year: number;
   price: number;
@@ -28,4 +29,5 @@ const CarSchema: Schema = new Schema({
   }
 });
 
-export const CarModel = model<Car & Document>('Car', CarSchema);
+export const CarEntity = model<ICar & Document>('Car', CarSchema);
+

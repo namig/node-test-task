@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { CarService } from "../Service/CarService";
 
 export class CarController {
@@ -13,21 +13,30 @@ export class CarController {
     return router;
   }
 
-  public getCars = async (req: Request, res: Response) => {
-    const cars = await this.carService.getCars();
-
-    res.send(cars);
+  public getCars = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const cars = await this.carService.getCars();
+      res.send(cars);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  public createCar = async (req: Request, res: Response) => {
-    const car = await this.carService.createCar(req.body);
-
-    res.send(car);
+  public createCar = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const car = await this.carService.createCar(req.body);
+      res.send(car);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  public deleteCar = async (req: Request, res: Response) => {
-    const car = await this.carService.deleteCar(req.params.id);
-
-    res.send(car);
+  public deleteCar = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.carService.deleteCar(req.params.id);
+      res.status(200);
+    } catch (error) {
+      next(error);
+    }
   }
 }
