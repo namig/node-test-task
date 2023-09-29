@@ -1,0 +1,21 @@
+### Get cars
+
+GET {{url}}/api/cars
+Content-Type: application/json
+
+### Create car
+
+POST {{url}}/api/cars
+Content-Type: application/json
+
+{
+  "name": "BMW X6",
+  "year": 2010,
+  "price": 10000,
+  "brandId": 123
+}
+
+### Delete car
+
+DELETE {{url}}/api/cars/65168501c2b9f8b1f4387d5b
+Content-Type: application/json
