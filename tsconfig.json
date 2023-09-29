@@ -8,7 +8,9 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "baseUrl": ".",
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": [
     "src/**/*"

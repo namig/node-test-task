@@ -12,10 +12,10 @@ Content-Type: application/json
   "name": "BMW X6",
   "year": 2010,
   "price": 10000,
-  "brand": 123
+  "brand": "BMW"
 }
 
 ### Delete car
 
-DELETE {{url}}/api/cars/65168501c2b9f8b1f4387d5b
+DELETE {{url}}/api/cars/6516fc932b482f6bf74527c6
 Content-Type: application/json

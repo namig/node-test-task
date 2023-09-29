@@ -20,7 +20,7 @@ export class CarCommand {
       const cars = await this.carApi.getCars();
       this.log(cars);
     } catch (e) {
-      console.error(`Something went wrong`);
+      this.error(`Something went wrong`);
     }
   }
 
@@ -39,13 +39,17 @@ export class CarCommand {
       },
     ]);
 
-    const dto = new CreateCarDto(answers.name, parseInt(answers.year), parseInt(answers.price), answers.brand);
     try {
+      const dto = new CreateCarDto(answers.name, parseInt(answers.year), parseInt(answers.price), answers.brand);
       const createdCar = await this.carApi.createCar(dto);
       this.log(`Car ${answers.name} created:`);
       this.log(createdCar);
     } catch (e: any) {
-      console.error(`Something went wrong`);
+      if (e.response?.status === 400) {
+        this.error(`Validation error: ${e.response.data.message}`);
+      } else {
+        this.error(`Something went wrong`);
+      }
     }
   }
 
@@ -53,14 +57,17 @@ export class CarCommand {
     try {
       await this.carApi.deleteCar(id);
       this.log(`Car with id ${id} deleted`)
-    } catch (e) {
-      this.log(`Car with id ${id} not found`);
-      return;
+    } catch (e: any) {
+      this.error(`Car with id ${id} not found`);
     }
   }
 
   private log(data: any): void {
     console.log(data);
+  }
+
+  private error(data: any): void {
+    console.error(data);
   }
 
   initCommands(): void {
