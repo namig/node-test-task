@@ -1,7 +1,8 @@
-import { CarApi } from "./CarApi";
 import { Command } from "commander";
 import process from "process";
 import inquirer from "inquirer";
+import { CreateCarDto } from "./Api/Dto/CreateCarDto";
+import { CarApi } from "./Api/CarApi";
 
 export class CarCommand {
   carApi: CarApi;
@@ -15,12 +16,16 @@ export class CarCommand {
   }
 
   private list = async (): Promise<void> => {
-    const cars = await this.carApi.getCars();
-    this.log(cars);
+    try {
+      const cars = await this.carApi.getCars();
+      this.log(cars);
+    } catch (e) {
+      console.error(`Something went wrong`);
+    }
   }
 
   private createCar = async () => {
-    console.log("Create a new car");
+    this.log("Create a new car");
 
     const answers = await inquirer.prompt([
       { name: 'name', message: 'Enter name of the car:', type: 'input' },
@@ -33,13 +38,25 @@ export class CarCommand {
         choices: ['BMW', 'Audi', 'Mercedes', 'Porsche', 'Toyota']
       },
     ]);
-    console.log(answers);
+
+    const dto = new CreateCarDto(answers.name, parseInt(answers.year), parseInt(answers.price), answers.brand);
+    try {
+      const createdCar = await this.carApi.createCar(dto);
+      this.log(`Car ${answers.name} created:`);
+      this.log(createdCar);
+    } catch (e: any) {
+      console.error(`Something went wrong`);
+    }
   }
 
-
   private deleteCar = async (id: string): Promise<void> => {
-    await this.carApi.deleteCar(id);
-    this.log(`Car with id ${id} deleted`)
+    try {
+      await this.carApi.deleteCar(id);
+      this.log(`Car with id ${id} deleted`)
+    } catch (e) {
+      this.log(`Car with id ${id} not found`);
+      return;
+    }
   }
 
   private log(data: any): void {

@@ -4,7 +4,9 @@ interface Car {
   name: string;
   year: number;
   price: number;
-  brandId: string;
+  // in order to save time I will use the brand as string,
+  // but in a real project I would use a reference to the brand model like brandId or brandCode
+  brand: string;
 }
 
 const CarSchema: Schema = new Schema({
@@ -20,7 +22,7 @@ const CarSchema: Schema = new Schema({
     type: Number,
     required: true,
   },
-  brandId: {
+  brand: {
     type: String,
     required: true,
   }
