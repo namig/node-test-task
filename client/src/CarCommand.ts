@@ -58,8 +58,9 @@ export class CarCommand {
       await this.carApi.deleteCar(id);
       this.log(`Car with id ${id} deleted`)
     } catch (e: any) {
-      if (e.response?.status === 404) {
-        this.error(`Car with id ${id} not found`);
+      const status = e.response?.status;
+      if (status === 404 || status === 400) {
+        this.error(e.response.data.message);
       } else {
         this.error(e);
       }
