@@ -15,9 +15,9 @@ export class CarCommand {
     this.initCommands();
   }
 
-  private list = async (): Promise<void> => {
+  private list = async (options: any): Promise<void> => {
     try {
-      const cars = await this.carApi.getCars();
+      const cars = await this.carApi.getCars(options.sort);
       this.log(cars);
     } catch (e) {
       this.error(e);
@@ -83,6 +83,7 @@ export class CarCommand {
     this.program
       .command('list')
       .description('List all cars')
+      .option('-s, --sort <field>', 'Sort by field')
       .action(this.list);
 
     this.program.command('add')

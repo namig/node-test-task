@@ -9,8 +9,8 @@ export class CarApi {
     baseURL: process.env.API_URL || 'http://localhost:8000',
   });
 
-  getCars = async (): Promise<any> => {
-    const response = await this._axios.get('/api/cars');
+  getCars = async (sortBy?: string): Promise<any> => {
+    const response = await this._axios.get('/api/cars', { params: { sortBy } });
     return Car.fromDtos(response.data as CarDto[]);
   }
 

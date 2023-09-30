@@ -1,6 +1,6 @@
 ### Get cars
 
-GET {{url}}/api/cars
+GET {{url}}/api/cars?sortBy=brand
 Content-Type: application/json
 
 ### Create car

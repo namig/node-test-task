@@ -54,7 +54,7 @@ If you get error with permissions `permission denied: car` try to run `chmod +x 
 
 - `car --help` - show help
 - `car --version` - show version
-- `car list` - list all cars
+- `car list` - list all cars, `-s, --sort <field>` - sort by field
 - `car add` - add new car
 - `car delete <id>` - delete car by id
 

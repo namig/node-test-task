@@ -4,9 +4,15 @@ import { Car } from "../Model/Car";
 import { NotFoundError } from "../Infrastructure/Error/NotFoundError";
 import * as mongoose from "mongoose";
 import { ValidationHttpError } from "../Infrastructure/Error/ValidationHttpError";
+import { CarsFilter } from "../Dto/CarsFilter";
 
 export class CarService {
-  public getCars = async (): Promise<Car[]> => {
+  public getCars = async (filter: CarsFilter): Promise<Car[]> => {
+    if (filter.sortBy) {
+      const sort: any = { [filter.sortBy]: 1 };
+      return Car.fromEntities(await CarEntity.find().sort(sort));
+    }
+
     return Car.fromEntities(await CarEntity.find());
   }
 

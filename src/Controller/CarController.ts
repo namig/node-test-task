@@ -4,6 +4,7 @@ import { plainToInstance } from "class-transformer";
 import { CreateCarDto } from "../Dto/CreateCarDto";
 import { validate, ValidationError } from "class-validator";
 import { ValidationHttpError } from "../Infrastructure/Error/ValidationHttpError";
+import { CarsFilter } from "../Dto/CarsFilter";
 
 export class CarController {
   constructor(private carService: CarService) {
@@ -19,7 +20,8 @@ export class CarController {
 
   public getCars = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const cars = await this.carService.getCars();
+      const filter = new CarsFilter(req.query.sortBy as string);
+      const cars = await this.carService.getCars(filter);
       res.send(cars);
     } catch (error) {
       next(error);
