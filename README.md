@@ -1,5 +1,13 @@
 # Node.js test task
 
+## Quick start with docker
+
+```
+chmod +x start.sh && ./start.sh
+```
+
+Or use system node.js and run backend and client in dev mode
+
 ## Backend
 
 ### Installation
@@ -22,15 +30,16 @@
 - `cd client`
 - `npm install`
 
-### In order to use cli command (car) directly from the terminal install it globally
-
-- `npm install -g .`
-
 ### Run dev mode
 
 `npm run dev`
 
-Now you can use the cli command `car` from the terminal
+### In order to use cli command (car) directly from the terminal install it globally
+
+- `npm install -g .`
+
+Now you can use the cli command `car` from the terminal or run manually `node ./dist/index.js`
+If you get error with permissions `permission denied: car` try to run `chmod +x ./dist/index.js`
 
 ### Commands
 

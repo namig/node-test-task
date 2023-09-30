@@ -1,0 +1,15 @@
+services:
+
+  node:
+    build:
+      dockerfile: docker/node/Dockerfile
+      context: .
+      target: dev
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229 # debug port

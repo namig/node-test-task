@@ -20,7 +20,7 @@ export class CarCommand {
       const cars = await this.carApi.getCars();
       this.log(cars);
     } catch (e) {
-      this.error(`Something went wrong`);
+      this.error(e);
     }
   }
 
@@ -48,7 +48,7 @@ export class CarCommand {
       if (e.response?.status === 400) {
         this.error(`Validation error: ${e.response.data.message}`);
       } else {
-        this.error(`Something went wrong`);
+        this.error(e);
       }
     }
   }
@@ -58,7 +58,11 @@ export class CarCommand {
       await this.carApi.deleteCar(id);
       this.log(`Car with id ${id} deleted`)
     } catch (e: any) {
-      this.error(`Car with id ${id} not found`);
+      if (e.response?.status === 404) {
+        this.error(`Car with id ${id} not found`);
+      } else {
+        this.error(e);
+      }
     }
   }
 

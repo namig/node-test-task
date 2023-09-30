@@ -6,7 +6,7 @@ import { CreateCarDto } from "./Dto/CreateCarDto";
 
 export class CarApi {
   _axios: AxiosInstance = axios.create({
-    baseURL: process.env.API_URL
+    baseURL: process.env.API_URL || 'http://localhost:8000',
   });
 
   getCars = async (): Promise<any> => {
