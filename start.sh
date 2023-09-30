@@ -7,4 +7,4 @@ npm install
 npm run build
 npm i -g .
 
-# go to client folder and run `car` command or `node ./dist/index.js`
+# run `car` command or `node ./dist/index.js`
