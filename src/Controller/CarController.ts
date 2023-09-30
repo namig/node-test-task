@@ -30,10 +30,8 @@ export class CarController {
     try {
       const dto = plainToInstance(CreateCarDto, req.body);
       const errors = await validate(dto);
-      console.log(errors);
       if (errors.length > 0) {
         const message = errors.map((error: ValidationError) => Object.values(error.constraints || [])).join(', ');
-        console.log('ERROR message ' + message);
         next(new ValidationHttpError(message));
         return;
       }
@@ -48,7 +46,7 @@ export class CarController {
   public deleteCar = async (req: Request, res: Response, next: NextFunction) => {
     try {
       await this.carService.deleteCar(req.params.id);
-      res.status(200);
+      res.status(200).send();
     } catch (error) {
       next(error);
     }
