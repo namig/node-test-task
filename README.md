@@ -97,3 +97,7 @@ If you get error with permissions `permission denied: car` try to run `chmod +x 
 - Год производства
 - Цена
 - любые дополнительные поля, которые нужны для решения задачи
+
+## Demo
+
+![Demo](./artificats/demo.gif)
